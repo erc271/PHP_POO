@@ -3,7 +3,6 @@
 class Database
 {
     public $Books = [];
-
     public function __construct()
     {
         $this->retrieveData();
@@ -12,21 +11,14 @@ class Database
     private function retrieveData()
     {
         $file_path = "../DB/DataBase.txt";
-
-        if (file_exists($file_path)) {
+// 
             $content = file_get_contents($file_path);
             
             // Check if unserialization is successful
             $Data = unserialize($content);
-
-            if ($Data !== false && isset($Data->Books)) {
-                $this->Books = $Data->Books;
-            } else {
-                // Handle the case of corrupted or invalid data
-                echo "Warning: Data in the file is invalid. Initializing with empty books.";
-                $this->Books = [];
-            }
-        }
+            $this->Books = $Data->Books; 
+            // 
+        
     }
 
     private function storeData()
@@ -37,9 +29,9 @@ class Database
         $Data = serialize($this);
         
         // Write the serialized data back to the file
-        if (file_put_contents($file_path, $Data) === false) {
-            echo "Error: Failed to write data to file.";
-        }
+       file_put_contents($file_path, $Data);
+           
+        
     }
 
     public function saveData()
