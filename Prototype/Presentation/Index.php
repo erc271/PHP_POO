@@ -21,11 +21,12 @@ function libraryManagement() {
         echo "|------------------------------------|\n";
         echo "| [v] - View the Books               |\n";
         echo "| [a] - Add a new Book               |\n";
+        echo "| [d] - Delete a Book                |\n";  
         echo "| [exit] - Exit the program          |\n";
         echo "+------------------------------------+\n\n";
 
         // Ask user for input inside the loop
-        $action = askQuestion("Enter your choice (v, a, exit): ");
+        $action = askQuestion("Enter your choice (v, a, d, exit): ");
         
         // Handle user input
         switch (strtolower($action)) {
@@ -37,6 +38,11 @@ function libraryManagement() {
             case 'a':
                 $bookPresentation = new BookPresentation();
                 $bookPresentation->addBook();  // Correct method name (addBook)
+                break;
+
+            case 'd':
+                $bookPresentation = new BookPresentation();
+                $bookPresentation->deleteBook();  // New method (deleteBook)
                 break;
 
             case 'exit':

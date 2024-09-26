@@ -1,34 +1,56 @@
 <?php
+
 require "../Services/BookServices.php";
 require "../Entity/Book.php";
 
-class BookPresentation {
-    public function viewBooks() {
-        echo "\nViewing the list of Books\n";
+class BookPresentation
+{
+    private $bookService;
 
-        $Bookservices = new BookService();
-        $books = $Bookservices->getBooks();
-        
+    public function __construct()
+    {
+        $this->bookService = new BookService();
+    }
+
+    public function viewBooks()
+    {
+        echo "\nViewing the list of Books\n";
+        $books = $this->bookService->getBooks();
+
         if (!empty($books)) {
             foreach ($books as $book) {
-                echo "ID: ".$book['id']."\n"; // Changed to access the array format
-                echo "Title: ".$book['title']."\n"; 
-                echo "ISBN: ".$book['isbn']."\n";
+                echo "ID: " . $book->getId() . "\n";
+                echo "Title: " . $book->getTitle() . "\n";
+                echo "ISBN: " . $book->getIsbn() . "\n";
+                echo "---------------------------------\n";
             }
         } else {
-            echo "No books available";
+            echo "No books available\n";
         }
         echo "---------------------------------\n\n";
     }
 
-    public function addBook() {
+    public function addBook()
+    {
         echo "\nAdding a new book\n";
         $title = askQuestion("Enter the title: ");
         $isbn = askQuestion("Enter the ISBN: ");
 
         $new_book = new Book($title, $isbn);
-        $BookService = new BookService();
-        $BookService->setBooks($new_book); // Pass book details as an associative array
+        $this->bookService->addBook($new_book);
         echo "Book added successfully\n";
     }
+
+    public function deleteBook()
+    {
+        echo "\nDeleting a book\n";
+        $id = askQuestion("Enter the ID of the book to delete: ");
+
+        if ($this->bookService->deleteBook($id)) {
+            echo "Book deleted successfully\n";
+        } else {
+            echo "Book not found\n";
+        }
+    }
 }
+?>

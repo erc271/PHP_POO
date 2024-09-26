@@ -17,7 +17,7 @@ class Database
             // Check if unserialization is successful
             $Data = unserialize($content);
             $this->Books = $Data->Books; 
-            // 
+             
         
     }
 
